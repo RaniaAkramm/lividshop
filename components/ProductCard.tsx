@@ -1,5 +1,8 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
+import { useCart } from "@/context/CartContext";
 
 type ProductCardProps = {
   id: number;
@@ -10,11 +13,25 @@ type ProductCardProps = {
 };
 
 export default function ProductCard({
+  id,
   slug,
   name,
   price,
   image,
 }: ProductCardProps) {
+  const { addToCart } = useCart();
+
+  function handleAddToCart() {
+    addToCart({
+      id,
+      slug,
+      name,
+      image,
+      price: Number(price.replace("$", "")),
+      quantity: 1,
+    });
+  }
+
   return (
     <div className="card overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-orange-500">
 
@@ -57,16 +74,27 @@ export default function ProductCard({
           {price}
         </p>
 
-        <Link
-          href={`/product/${slug}`}
-          className="btn-primary"
+        <div
           style={{
-            display: "inline-block",
+            display: "flex",
+            gap: "12px",
             marginTop: "20px",
           }}
         >
-          View Product
-        </Link>
+          <Link
+            href={`/product/${slug}`}
+            className="btn-outline"
+          >
+            View
+          </Link>
+
+          <button
+            onClick={handleAddToCart}
+            className="btn-primary"
+          >
+            Add to Cart
+          </button>
+        </div>
 
       </div>
 
