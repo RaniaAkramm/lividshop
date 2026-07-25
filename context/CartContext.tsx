@@ -5,6 +5,7 @@ import {
   useContext,
   useMemo,
   useState,
+  useEffect,
   ReactNode,
 } from "react";
 
@@ -27,12 +28,30 @@ type CartContextType = {
 
 const CartContext = createContext<CartContextType | null>(null);
 
+const STORAGE_KEY = "lividshop-cart";
+
 export function CartProvider({
   children,
 }: {
   children: ReactNode;
 }) {
   const [items, setItems] = useState<CartItem[]>([]);
+
+  useEffect(() => {
+    const savedCart = localStorage.getItem(STORAGE_KEY);
+
+    if (savedCart) {
+      try {
+        setItems(JSON.parse(savedCart));
+      } catch {
+        localStorage.removeItem(STORAGE_KEY);
+      }
+    }
+  }, []);
+
+  useEffect(() => {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(items));
+  }, [items]);
 
   function addToCart(item: CartItem) {
     setItems((current) => {
