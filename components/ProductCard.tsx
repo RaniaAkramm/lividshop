@@ -1,31 +1,37 @@
 import Link from "next/link";
+import Image from "next/image";
 
 type ProductCardProps = {
   id: number;
   name: string;
   price: string;
-  image?: string;
+  image: string;
 };
 
 export default function ProductCard({
   id,
   name,
   price,
+  image,
 }: ProductCardProps) {
   return (
     <div className="card overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-orange-500">
 
       <div
         style={{
+          position: "relative",
+          width: "100%",
           height: "220px",
-          background: "#202020",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          color: "#666",
         }}
       >
-        Product Image
+        <Image
+          src={image}
+          alt={name}
+          fill
+          style={{
+            objectFit: "cover",
+          }}
+        />
       </div>
 
       <div style={{ padding: "20px" }}>
