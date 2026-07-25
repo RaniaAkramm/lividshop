@@ -1,8 +1,8 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import ProductGallery from "@/components/ProductGallery";
 import { products } from "@/data/products";
 import { notFound } from "next/navigation";
-import Image from "next/image";
 
 type PageProps = {
   params: Promise<{
@@ -10,10 +10,14 @@ type PageProps = {
   }>;
 };
 
-export default async function ProductPage({ params }: PageProps) {
+export default async function ProductPage({
+  params,
+}: PageProps) {
   const { slug } = await params;
 
-  const product = products.find((item) => item.slug === slug);
+  const product = products.find(
+    (item) => item.slug === slug
+  );
 
   if (!product) {
     notFound();
@@ -31,27 +35,14 @@ export default async function ProductPage({ params }: PageProps) {
             style={{
               display: "grid",
               gridTemplateColumns: "1fr 1fr",
-              gap: "40px",
+              gap: "50px",
             }}
           >
 
-            <div
-              style={{
-                position: "relative",
-                width: "100%",
-                height: "500px",
-              }}
-            >
-              <Image
-                src={product.image}
-                alt={product.name}
-                fill
-                style={{
-                  objectFit: "cover",
-                  borderRadius: "16px",
-                }}
-              />
-            </div>
+            <ProductGallery
+              images={product.images}
+              name={product.name}
+            />
 
             <div>
 
@@ -71,6 +62,30 @@ export default async function ProductPage({ params }: PageProps) {
               </p>
 
               <p
+                style={{
+                  marginTop: "16px",
+                }}
+              >
+                ⭐ {product.rating} ({product.reviews} reviews)
+              </p>
+
+              <p
+                style={{
+                  marginTop: "10px",
+                }}
+              >
+                Brand: {product.brand}
+              </p>
+
+              <p
+                style={{
+                  marginTop: "10px",
+                }}
+              >
+                Stock: {product.stock}
+              </p>
+
+              <p
                 className="subtitle"
                 style={{
                   marginTop: "24px",
@@ -79,14 +94,26 @@ export default async function ProductPage({ params }: PageProps) {
                 {product.description}
               </p>
 
-              <button
-                className="btn-primary"
+              <div
                 style={{
+                  display: "flex",
+                  gap: "16px",
                   marginTop: "40px",
                 }}
               >
-                Buy Now
-              </button>
+                <button className="btn-primary">
+                  Add to Cart
+                </button>
+
+                <a
+                  href={product.affiliateUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="btn-outline"
+                >
+                  Buy Now
+                </a>
+              </div>
 
             </div>
 
