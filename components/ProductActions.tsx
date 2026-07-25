@@ -1,5 +1,6 @@
 "use client";
 
+import { useState } from "react";
 import { useCart } from "@/context/CartContext";
 
 type ProductActionsProps = {
@@ -21,6 +22,8 @@ export default function ProductActions({
 }: ProductActionsProps) {
   const { addToCart } = useCart();
 
+  const [quantity, setQuantity] = useState(1);
+
   function handleAddToCart() {
     addToCart({
       id,
@@ -28,34 +31,75 @@ export default function ProductActions({
       name,
       image,
       price,
-      quantity: 1,
+      quantity,
     });
   }
 
   return (
     <div
       style={{
-        display: "flex",
-        gap: "16px",
         marginTop: "40px",
-        flexWrap: "wrap",
       }}
     >
-      <button
-        onClick={handleAddToCart}
-        className="btn-primary"
+      <div
+        style={{
+          display: "flex",
+          alignItems: "center",
+          gap: "12px",
+          marginBottom: "24px",
+        }}
       >
-        Add to Cart
-      </button>
+        <span>Quantity</span>
 
-      <a
-        href={affiliateUrl}
-        target="_blank"
-        rel="noopener noreferrer"
-        className="btn-outline"
+        <button
+          className="btn-outline"
+          onClick={() =>
+            setQuantity((q) => Math.max(1, q - 1))
+          }
+        >
+          -
+        </button>
+
+        <strong
+          style={{
+            minWidth: "32px",
+            textAlign: "center",
+          }}
+        >
+          {quantity}
+        </strong>
+
+        <button
+          className="btn-outline"
+          onClick={() => setQuantity((q) => q + 1)}
+        >
+          +
+        </button>
+      </div>
+
+      <div
+        style={{
+          display: "flex",
+          gap: "16px",
+          flexWrap: "wrap",
+        }}
       >
-        Buy Now
-      </a>
+        <button
+          onClick={handleAddToCart}
+          className="btn-primary"
+        >
+          Add to Cart
+        </button>
+
+        <a
+          href={affiliateUrl}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="btn-outline"
+        >
+          Buy Now
+        </a>
+      </div>
     </div>
   );
 }
