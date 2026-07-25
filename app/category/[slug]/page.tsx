@@ -16,8 +16,7 @@ export default async function CategoryPage({ params }: PageProps) {
   const category = slug.replace(/-/g, " ").toLowerCase();
 
   const categoryProducts = products.filter(
-    (product) =>
-      product.category.toLowerCase() === category
+    (product) => product.category.toLowerCase() === category
   );
 
   if (categoryProducts.length === 0) {
@@ -43,6 +42,7 @@ export default async function CategoryPage({ params }: PageProps) {
               <ProductCard
                 key={product.id}
                 id={product.id}
+                slug={product.slug}
                 name={product.name}
                 price={`$${product.price.toFixed(2)}`}
                 image={product.image}
