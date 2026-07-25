@@ -18,6 +18,7 @@ export default function FeaturedProducts() {
             <ProductCard
               key={product.id}
               id={product.id}
+              slug={product.slug}
               name={product.name}
               price={`$${product.price.toFixed(2)}`}
               image={product.image}
