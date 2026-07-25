@@ -37,7 +37,7 @@ export default function ShopPage() {
                 slug={product.slug}
                 name={product.name}
                 price={`$${product.price.toFixed(2)}`}
-                image={product.image}
+                image={product.images[0]}
               />
             ))}
           </div>
