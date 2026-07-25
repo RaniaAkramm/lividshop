@@ -1,0 +1,68 @@
+import Link from "next/link";
+
+type ProductCardProps = {
+  id: number;
+  name: string;
+  price: string;
+  image?: string;
+};
+
+export default function ProductCard({
+  id,
+  name,
+  price,
+}: ProductCardProps) {
+  return (
+    <div className="card overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-orange-500">
+
+      <div
+        style={{
+          height: "220px",
+          background: "#202020",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          color: "#666",
+        }}
+      >
+        Product Image
+      </div>
+
+      <div style={{ padding: "20px" }}>
+
+        <h3
+          style={{
+            fontSize: "20px",
+            fontWeight: 700,
+          }}
+        >
+          {name}
+        </h3>
+
+        <p
+          style={{
+            color: "#ff6a00",
+            marginTop: "12px",
+            fontSize: "18px",
+            fontWeight: 700,
+          }}
+        >
+          {price}
+        </p>
+
+        <Link
+          href={`/product/${id}`}
+          className="btn-primary"
+          style={{
+            display: "inline-block",
+            marginTop: "20px",
+          }}
+        >
+          View Product
+        </Link>
+
+      </div>
+
+    </div>
+  );
+}
