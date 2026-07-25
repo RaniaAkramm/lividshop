@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductGallery from "@/components/ProductGallery";
+import RelatedProducts from "@/components/RelatedProducts";
 import { products } from "@/data/products";
 import { notFound } from "next/navigation";
 
@@ -122,6 +123,8 @@ export default async function ProductPage({
         </div>
 
       </main>
+
+      <RelatedProducts currentProduct={product} />
 
       <Footer />
     </>
