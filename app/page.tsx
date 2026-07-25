@@ -1,4 +1,5 @@
 import Header from "@/components/Header";
+import Hero from "@/components/Hero";
 
 export default function HomePage() {
   return (
@@ -6,37 +7,7 @@ export default function HomePage() {
 
       <Header />
 
-      <section className="section">
-        <div className="container">
-
-          <h1 className="title">
-            Halloween Starts Here
-          </h1>
-
-          <p className="subtitle">
-            Discover costumes, masks, horror props, gothic fashion,
-            decorations, and spooky collectibles.
-          </p>
-
-          <div
-            style={{
-              display: "flex",
-              gap: "16px",
-              marginTop: "32px",
-              flexWrap: "wrap",
-            }}
-          >
-            <button className="btn-primary">
-              Shop Now
-            </button>
-
-            <button className="btn-outline">
-              Browse Categories
-            </button>
-          </div>
-
-        </div>
-      </section>
+      <Hero />
 
       <section className="section">
 
