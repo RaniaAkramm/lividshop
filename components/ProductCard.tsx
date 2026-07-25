@@ -15,7 +15,7 @@ type ProductCardProps = {
 export default function ProductCard({
   id,
   slug,
-  name,
+ name,
   price,
   image,
 }: ProductCardProps) {
@@ -46,9 +46,7 @@ export default function ProductCard({
           src={image}
           alt={name}
           fill
-          style={{
-            objectFit: "cover",
-          }}
+          style={{ objectFit: "cover" }}
         />
       </div>
 
@@ -94,6 +92,7 @@ export default function ProductCard({
           >
             Add to Cart
           </button>
+
         </div>
 
       </div>
