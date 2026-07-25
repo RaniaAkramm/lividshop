@@ -3,13 +3,14 @@ import Image from "next/image";
 
 type ProductCardProps = {
   id: number;
+  slug: string;
   name: string;
   price: string;
   image: string;
 };
 
 export default function ProductCard({
-  id,
+  slug,
   name,
   price,
   image,
@@ -57,7 +58,7 @@ export default function ProductCard({
         </p>
 
         <Link
-          href={`/product/${id}`}
+          href={`/product/${slug}`}
           className="btn-primary"
           style={{
             display: "inline-block",
