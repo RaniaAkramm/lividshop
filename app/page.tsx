@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
 import CategoryGrid from "@/components/CategoryGrid";
+import Footer from "@/components/Footer";
 
 export default function HomePage() {
   return (
@@ -102,6 +103,8 @@ export default function HomePage() {
         </div>
 
       </section>
+
+      <Footer />
 
     </main>
   );
