@@ -1,5 +1,6 @@
 import Header from "@/components/Header";
 import Hero from "@/components/Hero";
+import CategoryGrid from "@/components/CategoryGrid";
 
 export default function HomePage() {
   return (
@@ -9,48 +10,7 @@ export default function HomePage() {
 
       <Hero />
 
-      <section className="section">
-
-        <div className="container">
-
-          <h2 className="title">
-            Shop by Category
-          </h2>
-
-          <div
-            className="grid grid-4"
-            style={{ marginTop: "40px" }}
-          >
-
-            <div className="card">
-              <div style={{ padding: "30px" }}>
-                <h3>Halloween Costumes</h3>
-              </div>
-            </div>
-
-            <div className="card">
-              <div style={{ padding: "30px" }}>
-                <h3>Horror Masks</h3>
-              </div>
-            </div>
-
-            <div className="card">
-              <div style={{ padding: "30px" }}>
-                <h3>Decorations</h3>
-              </div>
-            </div>
-
-            <div className="card">
-              <div style={{ padding: "30px" }}>
-                <h3>Gothic Fashion</h3>
-              </div>
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
+      <CategoryGrid />
 
       <section className="section">
 
