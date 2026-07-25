@@ -9,7 +9,6 @@ export default function ShopPage() {
       <Header />
 
       <main className="section">
-
         <div className="container">
 
           <h1 className="title">
@@ -35,6 +34,7 @@ export default function ShopPage() {
               <ProductCard
                 key={product.id}
                 id={product.id}
+                slug={product.slug}
                 name={product.name}
                 price={`$${product.price.toFixed(2)}`}
                 image={product.image}
@@ -43,7 +43,6 @@ export default function ShopPage() {
           </div>
 
         </div>
-
       </main>
 
       <Footer />
