@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductGallery from "@/components/ProductGallery";
+import ProductActions from "@/components/ProductActions";
 import RelatedProducts from "@/components/RelatedProducts";
 import { products } from "@/data/products";
 import { notFound } from "next/navigation";
@@ -95,26 +96,14 @@ export default async function ProductPage({
                 {product.description}
               </p>
 
-              <div
-                style={{
-                  display: "flex",
-                  gap: "16px",
-                  marginTop: "40px",
-                }}
-              >
-                <button className="btn-primary">
-                  Add to Cart
-                </button>
-
-                <a
-                  href={product.affiliateUrl}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="btn-outline"
-                >
-                  Buy Now
-                </a>
-              </div>
+              <ProductActions
+                id={product.id}
+                slug={product.slug}
+                name={product.name}
+                image={product.images[0]}
+                price={product.price}
+                affiliateUrl={product.affiliateUrl}
+              />
 
             </div>
 
