@@ -10,13 +10,16 @@ type PageProps = {
   }>;
 };
 
-export default async function CategoryPage({ params }: PageProps) {
+export default async function CategoryPage({
+  params,
+}: PageProps) {
   const { slug } = await params;
 
   const category = slug.replace(/-/g, " ").toLowerCase();
 
   const categoryProducts = products.filter(
-    (product) => product.category.toLowerCase() === category
+    (product) =>
+      product.category.toLowerCase() === category
   );
 
   if (categoryProducts.length === 0) {
@@ -36,7 +39,9 @@ export default async function CategoryPage({ params }: PageProps) {
 
           <div
             className="grid grid-4"
-            style={{ marginTop: "40px" }}
+            style={{
+              marginTop: "40px",
+            }}
           >
             {categoryProducts.map((product) => (
               <ProductCard
@@ -45,7 +50,7 @@ export default async function CategoryPage({ params }: PageProps) {
                 slug={product.slug}
                 name={product.name}
                 price={`$${product.price.toFixed(2)}`}
-                image={product.image}
+                image={product.images[0]}
               />
             ))}
           </div>
