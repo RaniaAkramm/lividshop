@@ -1,4 +1,4 @@
-import Link from "next/link";
+import ProductCard from "@/components/ProductCard";
 
 const products = [
   {
@@ -37,45 +37,12 @@ export default function FeaturedProducts() {
           style={{ marginTop: "40px" }}
         >
           {products.map((product) => (
-            <div
+            <ProductCard
               key={product.id}
-              className="card"
-            >
-              <div
-                style={{
-                  height: "220px",
-                  background: "#202020",
-                }}
-              />
-
-              <div style={{ padding: "20px" }}>
-
-                <h3>{product.name}</h3>
-
-                <p
-                  style={{
-                    marginTop: "10px",
-                    color: "#ff6a00",
-                    fontWeight: 700,
-                  }}
-                >
-                  {product.price}
-                </p>
-
-                <Link
-                  href={`/product/${product.id}`}
-                  className="btn-primary"
-                  style={{
-                    display: "inline-block",
-                    marginTop: "20px",
-                  }}
-                >
-                  View Product
-                </Link>
-
-              </div>
-
-            </div>
+              id={product.id}
+              name={product.name}
+              price={product.price}
+            />
           ))}
         </div>
 
