@@ -1,27 +1,5 @@
 import ProductCard from "@/components/ProductCard";
-
-const products = [
-  {
-    id: 1,
-    name: "Classic Vampire Costume",
-    price: "$49.99",
-  },
-  {
-    id: 2,
-    name: "Scary Clown Mask",
-    price: "$29.99",
-  },
-  {
-    id: 3,
-    name: "Halloween Decoration Kit",
-    price: "$39.99",
-  },
-  {
-    id: 4,
-    name: "Gothic Hooded Cloak",
-    price: "$59.99",
-  },
-];
+import { products } from "@/data/products";
 
 export default function FeaturedProducts() {
   return (
@@ -41,7 +19,8 @@ export default function FeaturedProducts() {
               key={product.id}
               id={product.id}
               name={product.name}
-              price={product.price}
+              price={`$${product.price.toFixed(2)}`}
+              image={product.image}
             />
           ))}
         </div>
