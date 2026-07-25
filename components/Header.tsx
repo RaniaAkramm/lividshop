@@ -4,10 +4,13 @@ import Link from "next/link";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Heart, ShoppingCart, Menu } from "lucide-react";
+import { useCart } from "@/context/CartContext";
 
 export default function Header() {
   const [query, setQuery] = useState("");
   const router = useRouter();
+
+  const { totalItems } = useCart();
 
   function handleSearch(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -71,8 +74,19 @@ export default function Header() {
             <Heart size={22} />
           </Link>
 
-          <Link href="/cart">
+          <Link
+            href="/cart"
+            className="relative"
+          >
             <ShoppingCart size={22} />
+
+            {totalItems > 0 && (
+              <span
+                className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-xs font-bold text-white"
+              >
+                {totalItems}
+              </span>
+            )}
           </Link>
 
           <button className="lg:hidden">
