@@ -2,7 +2,9 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { Heart } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 
 type ProductCardProps = {
   id: number;
@@ -15,11 +17,19 @@ type ProductCardProps = {
 export default function ProductCard({
   id,
   slug,
- name,
+  name,
   price,
   image,
 }: ProductCardProps) {
   const { addToCart } = useCart();
+
+  const {
+    addToWishlist,
+    removeFromWishlist,
+    isInWishlist,
+  } = useWishlist();
+
+  const favorite = isInWishlist(id);
 
   function handleAddToCart() {
     addToCart({
@@ -29,6 +39,21 @@ export default function ProductCard({
       image,
       price: Number(price.replace("$", "")),
       quantity: 1,
+    });
+  }
+
+  function handleWishlist() {
+    if (favorite) {
+      removeFromWishlist(id);
+      return;
+    }
+
+    addToWishlist({
+      id,
+      slug,
+      name,
+      image,
+      price: Number(price.replace("$", "")),
     });
   }
 
@@ -46,8 +71,35 @@ export default function ProductCard({
           src={image}
           alt={name}
           fill
-          style={{ objectFit: "cover" }}
+          style={{
+            objectFit: "cover",
+          }}
         />
+
+        <button
+          onClick={handleWishlist}
+          style={{
+            position: "absolute",
+            top: "12px",
+            right: "12px",
+            width: "42px",
+            height: "42px",
+            borderRadius: "999px",
+            border: "none",
+            cursor: "pointer",
+            background: "#111",
+            display: "flex",
+            alignItems: "center",
+            justifyContent: "center",
+          }}
+        >
+          <Heart
+            size={20}
+            fill={favorite ? "#ef4444" : "transparent"}
+            color={favorite ? "#ef4444" : "#ffffff"}
+          />
+        </button>
+
       </div>
 
       <div style={{ padding: "20px" }}>
@@ -92,7 +144,6 @@ export default function ProductCard({
           >
             Add to Cart
           </button>
-
         </div>
 
       </div>
