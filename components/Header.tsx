@@ -5,12 +5,14 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { Heart, ShoppingCart, Menu } from "lucide-react";
 import { useCart } from "@/context/CartContext";
+import { useWishlist } from "@/context/WishlistContext";
 
 export default function Header() {
   const [query, setQuery] = useState("");
   const router = useRouter();
 
   const { totalItems } = useCart();
+  const { items: wishlistItems } = useWishlist();
 
   function handleSearch(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -33,24 +35,17 @@ export default function Header() {
         </Link>
 
         <nav className="hidden lg:flex items-center gap-8">
-
           <Link href="/">Home</Link>
-
           <Link href="/shop">Shop</Link>
-
           <Link href="/categories">Categories</Link>
-
           <Link href="/blog">Blog</Link>
-
           <Link href="/contact">Contact</Link>
-
         </nav>
 
         <form
           onSubmit={handleSearch}
           className="hidden md:flex flex-1 max-w-md"
         >
-
           <input
             type="text"
             placeholder="Search products..."
@@ -65,13 +60,23 @@ export default function Header() {
           >
             Search
           </button>
-
         </form>
 
         <div className="flex items-center gap-5">
 
-          <Link href="/wishlist">
+          <Link
+            href="/wishlist"
+            className="relative"
+          >
             <Heart size={22} />
+
+            {wishlistItems.length > 0 && (
+              <span
+                className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white"
+              >
+                {wishlistItems.length}
+              </span>
+            )}
           </Link>
 
           <Link
