@@ -1,6 +1,7 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ShopProducts from "@/components/ShopProducts";
+import Breadcrumbs from "@/components/Breadcrumbs";
 
 export default function ShopPage() {
   return (
@@ -9,6 +10,18 @@ export default function ShopPage() {
 
       <main className="section">
         <div className="container">
+
+          <Breadcrumbs
+            items={[
+              {
+                label: "Home",
+                href: "/",
+              },
+              {
+                label: "Shop",
+              },
+            ]}
+          />
 
           <h1 className="title">
             Shop
