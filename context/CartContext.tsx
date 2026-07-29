@@ -21,6 +21,8 @@ export type CartItem = {
 type CartContextType = {
   items: CartItem[];
   addToCart: (item: CartItem) => void;
+  increaseQuantity: (id: number) => void;
+  decreaseQuantity: (id: number) => void;
   removeFromCart: (id: number) => void;
   clearCart: () => void;
   totalItems: number;
@@ -64,20 +66,42 @@ export function CartProvider({
           product.id === item.id
             ? {
                 ...product,
-                quantity:
-                  product.quantity + item.quantity,
+                quantity: product.quantity + item.quantity,
               }
             : product
         );
       }
 
-      return [
-        ...current,
-        {
-          ...item,
-        },
-      ];
+      return [...current, item];
     });
+  }
+
+  function increaseQuantity(id: number) {
+    setItems((current) =>
+      current.map((item) =>
+        item.id === id
+          ? {
+              ...item,
+              quantity: item.quantity + 1,
+            }
+          : item
+      )
+    );
+  }
+
+  function decreaseQuantity(id: number) {
+    setItems((current) =>
+      current
+        .map((item) =>
+          item.id === id
+            ? {
+                ...item,
+                quantity: item.quantity - 1,
+              }
+            : item
+        )
+        .filter((item) => item.quantity > 0)
+    );
   }
 
   function removeFromCart(id: number) {
@@ -104,6 +128,8 @@ export function CartProvider({
       value={{
         items,
         addToCart,
+        increaseQuantity,
+        decreaseQuantity,
         removeFromCart,
         clearCart,
         totalItems,
@@ -114,4 +140,14 @@ export function CartProvider({
   );
 }
 
-export function useCart
+export function useCart() {
+  const context = useContext(CartContext);
+
+  if (!context) {
+    throw new Error(
+      "useCart must be used inside CartProvider."
+    );
+  }
+
+  return context;
+}
