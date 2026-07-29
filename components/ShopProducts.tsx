@@ -1,13 +1,17 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { useMemo, useState, useEffect } from "react";
 import ProductCard from "@/components/ProductCard";
+import Pagination from "@/components/Pagination";
 import { products } from "@/data/products";
+
+const PRODUCTS_PER_PAGE = 12;
 
 export default function ShopProducts() {
   const [search, setSearch] = useState("");
   const [category, setCategory] = useState("All");
   const [sort, setSort] = useState("default");
+  const [page, setPage] = useState(1);
 
   const categories = [
     "All",
@@ -50,6 +54,19 @@ export default function ShopProducts() {
     return result;
   }, [search, category, sort]);
 
+  useEffect(() => {
+    setPage(1);
+  }, [search, category, sort]);
+
+  const totalPages = Math.ceil(
+    filteredProducts.length / PRODUCTS_PER_PAGE
+  );
+
+  const currentProducts = filteredProducts.slice(
+    (page - 1) * PRODUCTS_PER_PAGE,
+    page * PRODUCTS_PER_PAGE
+  );
+
   return (
     <>
       <div
@@ -64,9 +81,7 @@ export default function ShopProducts() {
           className="input"
           placeholder="Search products..."
           value={search}
-          onChange={(e) =>
-            setSearch(e.target.value)
-          }
+          onChange={(e) => setSearch(e.target.value)}
         />
 
         <select
@@ -126,7 +141,7 @@ export default function ShopProducts() {
           marginTop: "32px",
         }}
       >
-        {filteredProducts.map((product) => (
+        {currentProducts.map((product) => (
           <ProductCard
             key={product.id}
             id={product.id}
@@ -137,6 +152,12 @@ export default function ShopProducts() {
           />
         ))}
       </div>
+
+      <Pagination
+        currentPage={page}
+        totalPages={totalPages}
+        onPageChange={setPage}
+      />
     </>
   );
 }
