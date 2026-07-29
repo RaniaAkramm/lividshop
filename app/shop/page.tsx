@@ -1,7 +1,6 @@
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ProductCard from "@/components/ProductCard";
-import { products } from "@/data/products";
+import ShopProducts from "@/components/ShopProducts";
 
 export default function ShopPage() {
   return (
@@ -21,26 +20,10 @@ export default function ShopPage() {
               marginTop: "12px",
             }}
           >
-            Browse all Halloween products.
+            Browse our complete Halloween collection.
           </p>
 
-          <div
-            className="grid grid-4"
-            style={{
-              marginTop: "40px",
-            }}
-          >
-            {products.map((product) => (
-              <ProductCard
-                key={product.id}
-                id={product.id}
-                slug={product.slug}
-                name={product.name}
-                price={`$${product.price.toFixed(2)}`}
-                image={product.images[0]}
-              />
-            ))}
-          </div>
+          <ShopProducts />
 
         </div>
       </main>
