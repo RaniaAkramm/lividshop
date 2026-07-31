@@ -6,18 +6,21 @@ export default function Footer() {
 
       <div className="container py-16">
 
-        <div className="grid grid-4">
+        <div className="grid gap-10 md:grid-cols-2 lg:grid-cols-4">
 
           <div>
 
-            <h2 className="mb-5 text-2xl font-bold text-orange-500">
+            <Link
+              href="/"
+              className="mb-5 inline-block text-3xl font-bold text-orange-500"
+            >
               LividShop
-            </h2>
+            </Link>
 
-            <p className="text-zinc-400">
-              Halloween costumes, horror masks,
-              gothic fashion, decorations,
-              collectibles and seasonal deals.
+            <p className="leading-7 text-zinc-400">
+              Discover the best Halloween costumes, horror masks,
+              gothic fashion, decorations and collectibles from
+              trusted affiliate partners.
             </p>
 
           </div>
@@ -28,29 +31,50 @@ export default function Footer() {
               Shop
             </h3>
 
-            <ul className="space-y-3">
+            <ul className="space-y-3 text-zinc-400">
 
               <li>
-                <Link href="/shop">
+                <Link
+                  href="/shop"
+                  className="transition hover:text-orange-500"
+                >
                   All Products
                 </Link>
               </li>
 
               <li>
-                <Link href="/category/costumes">
+                <Link
+                  href="/category/costumes"
+                  className="transition hover:text-orange-500"
+                >
                   Costumes
                 </Link>
               </li>
 
               <li>
-                <Link href="/category/masks">
+                <Link
+                  href="/category/masks"
+                  className="transition hover:text-orange-500"
+                >
                   Masks
                 </Link>
               </li>
 
               <li>
-                <Link href="/category/decorations">
+                <Link
+                  href="/category/decorations"
+                  className="transition hover:text-orange-500"
+                >
                   Decorations
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href="/category/fashion"
+                  className="transition hover:text-orange-500"
+                >
+                  Gothic Fashion
                 </Link>
               </li>
 
@@ -61,32 +85,53 @@ export default function Footer() {
           <div>
 
             <h3 className="mb-5 text-lg font-semibold">
-              Company
+              Information
             </h3>
 
-            <ul className="space-y-3">
+            <ul className="space-y-3 text-zinc-400">
 
               <li>
-                <Link href="/about">
-                  About
+                <Link
+                  href="/about"
+                  className="transition hover:text-orange-500"
+                >
+                  About Us
                 </Link>
               </li>
 
               <li>
-                <Link href="/contact">
+                <Link
+                  href="/contact"
+                  className="transition hover:text-orange-500"
+                >
                   Contact
                 </Link>
               </li>
 
               <li>
-                <Link href="/privacy">
+                <Link
+                  href="/privacy"
+                  className="transition hover:text-orange-500"
+                >
                   Privacy Policy
                 </Link>
               </li>
 
               <li>
-                <Link href="/terms">
+                <Link
+                  href="/terms"
+                  className="transition hover:text-orange-500"
+                >
                   Terms of Service
+                </Link>
+              </li>
+
+              <li>
+                <Link
+                  href="/affiliate-disclosure"
+                  className="transition hover:text-orange-500"
+                >
+                  Affiliate Disclosure
                 </Link>
               </li>
 
@@ -97,30 +142,23 @@ export default function Footer() {
           <div>
 
             <h3 className="mb-5 text-lg font-semibold">
-              Newsletter
+              Disclaimer
             </h3>
 
-            <p className="mb-4 text-zinc-400">
-              Subscribe for new arrivals and seasonal offers.
+            <p className="leading-7 text-zinc-400">
+              LividShop participates in affiliate programs.
+              We may earn a commission when you purchase
+              products through our links at no extra cost to you.
             </p>
-
-            <input
-              type="email"
-              placeholder="Email address"
-              className="mb-3 w-full rounded-lg border border-zinc-700 bg-zinc-900 px-4 py-3 outline-none"
-            />
-
-            <button className="btn-primary w-full">
-              Subscribe
-            </button>
 
           </div>
 
         </div>
 
-        <div className="mt-12 border-t border-zinc-800 pt-8 text-center text-zinc-500">
+        <div className="mt-12 border-t border-zinc-800 pt-8 text-center text-sm text-zinc-500">
 
-          © 2026 LividShop. All rights reserved.
+          © {new Date().getFullYear()} LividShop.
+          All rights reserved.
 
         </div>
 
