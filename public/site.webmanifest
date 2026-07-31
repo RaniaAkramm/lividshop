@@ -1,0 +1,20 @@
+{
+  "name": "LividShop",
+  "short_name": "LividShop",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#000000",
+  "theme_color": "#ff6a00",
+  "description": "Halloween Affiliate Store",
+  "icons": [
+    {
+      "src": "/favicon.ico",
+      "sizes": "48x48"
+    },
+    {
+      "src": "/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    }
+  ]
+}
