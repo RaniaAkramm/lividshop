@@ -30,6 +30,7 @@ export default function ProductCard({
   } = useWishlist();
 
   const favorite = isInWishlist(id);
+  const numericPrice = Number(price.replace("$", ""));
 
   function handleAddToCart() {
     addToCart({
@@ -37,7 +38,7 @@ export default function ProductCard({
       slug,
       name,
       image,
-      price: Number(price.replace("$", "")),
+      price: numericPrice,
       quantity: 1,
     });
   }
@@ -53,45 +54,37 @@ export default function ProductCard({
       slug,
       name,
       image,
-      price: Number(price.replace("$", "")),
+      price: numericPrice,
     });
   }
 
   return (
-    <div className="card overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-orange-500">
+    <article className="card overflow-hidden transition duration-300 hover:-translate-y-1 hover:border-orange-500">
 
-      <div
-        style={{
-          position: "relative",
-          width: "100%",
-          height: "220px",
-        }}
-      >
+      <div className="relative h-[220px] w-full">
+
         <Image
           src={image}
           alt={name}
           fill
-          style={{
-            objectFit: "cover",
-          }}
+          sizes="(max-width:768px) 100vw, (max-width:1200px) 50vw, 25vw"
+          loading="lazy"
+          className="object-cover transition duration-300 hover:scale-105"
         />
 
         <button
           onClick={handleWishlist}
-          style={{
-            position: "absolute",
-            top: "12px",
-            right: "12px",
-            width: "42px",
-            height: "42px",
-            borderRadius: "999px",
-            border: "none",
-            cursor: "pointer",
-            background: "#111",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
-          }}
+          aria-label={
+            favorite
+              ? "Remove from wishlist"
+              : "Add to wishlist"
+          }
+          title={
+            favorite
+              ? "Remove from wishlist"
+              : "Add to wishlist"
+          }
+          className="absolute right-3 top-3 flex h-11 w-11 items-center justify-center rounded-full bg-black/80 transition hover:bg-black"
         >
           <Heart
             size={20}
@@ -102,52 +95,37 @@ export default function ProductCard({
 
       </div>
 
-      <div style={{ padding: "20px" }}>
+      <div className="p-5">
 
-        <h3
-          style={{
-            fontSize: "20px",
-            fontWeight: 700,
-          }}
-        >
+        <h3 className="text-xl font-bold line-clamp-2">
           {name}
         </h3>
 
-        <p
-          style={{
-            color: "#ff6a00",
-            marginTop: "12px",
-            fontSize: "18px",
-            fontWeight: 700,
-          }}
-        >
+        <p className="mt-3 text-lg font-bold text-orange-500">
           {price}
         </p>
 
-        <div
-          style={{
-            display: "flex",
-            gap: "12px",
-            marginTop: "20px",
-          }}
-        >
+        <div className="mt-5 flex gap-3">
+
           <Link
             href={`/product/${slug}`}
-            className="btn-outline"
+            className="btn-outline flex-1 text-center"
           >
-            View
+            View Details
           </Link>
 
           <button
             onClick={handleAddToCart}
-            className="btn-primary"
+            className="btn-primary flex-1"
+            aria-label={`Add ${name} to cart`}
           >
             Add to Cart
           </button>
+
         </div>
 
       </div>
 
-    </div>
+    </article>
   );
 }
