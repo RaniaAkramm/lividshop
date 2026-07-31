@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductGallery from "@/components/ProductGallery";
@@ -12,6 +13,52 @@ type PageProps = {
   }>;
 };
 
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  const product = products.find(
+    (item) => item.slug === slug
+  );
+
+  if (!product) {
+    return {
+      title: "Product Not Found | LividShop",
+      description: "The requested product could not be found.",
+    };
+  }
+
+  return {
+    title: `${product.name} | LividShop`,
+    description: product.description,
+    alternates: {
+      canonical: `https://lividshop.com/product/${product.slug}`,
+    },
+    openGraph: {
+      title: product.name,
+      description: product.description,
+      url: `https://lividshop.com/product/${product.slug}`,
+      siteName: "LividShop",
+      images: [
+        {
+          url: product.images[0],
+          width: 1200,
+          height: 630,
+          alt: product.name,
+        },
+      ],
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: product.name,
+      description: product.description,
+      images: [product.images[0]],
+    },
+  };
+}
+
 export default async function ProductPage({
   params,
 }: PageProps) {
@@ -25,11 +72,45 @@ export default async function ProductPage({
     notFound();
   }
 
+  const jsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Product",
+    name: product.name,
+    image: product.images,
+    description: product.description,
+    brand: {
+      "@type": "Brand",
+      name: product.brand,
+    },
+    offers: {
+      "@type": "Offer",
+      priceCurrency: "USD",
+      price: product.price,
+      availability:
+        product.stock > 0
+          ? "https://schema.org/InStock"
+          : "https://schema.org/OutOfStock",
+      url: product.affiliateUrl,
+    },
+    aggregateRating: {
+      "@type": "AggregateRating",
+      ratingValue: product.rating,
+      reviewCount: product.reviews,
+    },
+  };
+
   return (
     <>
       <Header />
 
       <main className="section">
+
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify(jsonLd),
+          }}
+        />
 
         <div className="container">
 
@@ -76,7 +157,7 @@ export default async function ProductPage({
                   marginTop: "10px",
                 }}
               >
-                Brand: {product.brand}
+                <strong>Brand:</strong> {product.brand}
               </p>
 
               <p
@@ -84,7 +165,8 @@ export default async function ProductPage({
                   marginTop: "10px",
                 }}
               >
-                Stock: {product.stock}
+                <strong>Stock:</strong>{" "}
+                {product.stock > 0 ? "In Stock" : "Out of Stock"}
               </p>
 
               <p
