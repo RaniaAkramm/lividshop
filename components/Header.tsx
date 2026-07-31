@@ -2,14 +2,16 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, usePathname } from "next/navigation";
 import { Heart, ShoppingCart, Menu } from "lucide-react";
 import { useCart } from "@/context/CartContext";
 import { useWishlist } from "@/context/WishlistContext";
 
 export default function Header() {
   const [query, setQuery] = useState("");
+
   const router = useRouter();
+  const pathname = usePathname();
 
   const { totalItems } = useCart();
   const { items: wishlistItems } = useWishlist();
@@ -17,9 +19,17 @@ export default function Header() {
   function handleSearch(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
 
-    if (!query.trim()) return;
+    const value = query.trim();
 
-    router.push(`/search?q=${encodeURIComponent(query)}`);
+    if (!value) return;
+
+    router.push(`/search?q=${encodeURIComponent(value)}`);
+  }
+
+  function navClass(href: string) {
+    return pathname === href
+      ? "text-orange-500 font-semibold"
+      : "transition hover:text-orange-500";
   }
 
   return (
@@ -29,17 +39,33 @@ export default function Header() {
 
         <Link
           href="/"
-          className="text-3xl font-bold text-orange-500"
+          className="text-3xl font-bold tracking-tight text-orange-500"
         >
           LividShop
         </Link>
 
         <nav className="hidden lg:flex items-center gap-8">
-          <Link href="/">Home</Link>
-          <Link href="/shop">Shop</Link>
-          <Link href="/categories">Categories</Link>
-          <Link href="/blog">Blog</Link>
-          <Link href="/contact">Contact</Link>
+
+          <Link href="/" className={navClass("/")}>
+            Home
+          </Link>
+
+          <Link href="/shop" className={navClass("/shop")}>
+            Shop
+          </Link>
+
+          <Link href="/categories" className={navClass("/categories")}>
+            Categories
+          </Link>
+
+          <Link href="/blog" className={navClass("/blog")}>
+            Blog
+          </Link>
+
+          <Link href="/contact" className={navClass("/contact")}>
+            Contact
+          </Link>
+
         </nav>
 
         <form
@@ -47,16 +73,16 @@ export default function Header() {
           className="hidden md:flex flex-1 max-w-md"
         >
           <input
-            type="text"
-            placeholder="Search products..."
+            type="search"
+            placeholder="Search Halloween products..."
             value={query}
             onChange={(e) => setQuery(e.target.value)}
-            className="w-full rounded-l-lg border border-zinc-700 bg-zinc-900 px-4 py-2 text-white outline-none"
+            className="w-full rounded-l-lg border border-zinc-700 bg-zinc-900 px-4 py-2 text-white outline-none focus:border-orange-500"
           />
 
           <button
             type="submit"
-            className="rounded-r-lg bg-orange-500 px-5 font-semibold text-white hover:bg-orange-600"
+            className="rounded-r-lg bg-orange-500 px-5 font-semibold text-white transition hover:bg-orange-600"
           >
             Search
           </button>
@@ -66,35 +92,36 @@ export default function Header() {
 
           <Link
             href="/wishlist"
-            className="relative"
+            aria-label="Wishlist"
+            className="relative transition hover:text-orange-500"
           >
             <Heart size={22} />
 
             {wishlistItems.length > 0 && (
-              <span
-                className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white"
-              >
-                {wishlistItems.length}
+              <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-red-500 text-xs font-bold text-white">
+                {wishlistItems.length > 99 ? "99+" : wishlistItems.length}
               </span>
             )}
           </Link>
 
           <Link
             href="/cart"
-            className="relative"
+            aria-label="Shopping Cart"
+            className="relative transition hover:text-orange-500"
           >
             <ShoppingCart size={22} />
 
             {totalItems > 0 && (
-              <span
-                className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-xs font-bold text-white"
-              >
-                {totalItems}
+              <span className="absolute -right-2 -top-2 flex h-5 w-5 items-center justify-center rounded-full bg-orange-500 text-xs font-bold text-white">
+                {totalItems > 99 ? "99+" : totalItems}
               </span>
             )}
           </Link>
 
-          <button className="lg:hidden">
+          <button
+            className="lg:hidden"
+            aria-label="Open Menu"
+          >
             <Menu size={24} />
           </button>
 
