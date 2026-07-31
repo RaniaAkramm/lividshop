@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ProductCard from "@/components/ProductCard";
@@ -9,6 +10,34 @@ type PageProps = {
     slug: string;
   }>;
 };
+
+export async function generateMetadata({
+  params,
+}: PageProps): Promise<Metadata> {
+  const { slug } = await params;
+
+  const categoryName = slug.replace(/-/g, " ");
+
+  return {
+    title: `${categoryName} | LividShop`,
+    description: `Browse the best ${categoryName} products at LividShop. Discover Halloween costumes, masks, decorations and more from trusted affiliate partners.`,
+    alternates: {
+      canonical: `https://lividshop.com/category/${slug}`,
+    },
+    openGraph: {
+      title: `${categoryName} | LividShop`,
+      description: `Browse the best ${categoryName} products.`,
+      url: `https://lividshop.com/category/${slug}`,
+      siteName: "LividShop",
+      type: "website",
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: `${categoryName} | LividShop`,
+      description: `Browse the best ${categoryName} products.`,
+    },
+  };
+}
 
 export default async function CategoryPage({
   params,
@@ -26,6 +55,10 @@ export default async function CategoryPage({
     notFound();
   }
 
+  const categoryTitle = slug
+    .replace(/-/g, " ")
+    .replace(/\b\w/g, (char) => char.toUpperCase());
+
   return (
     <>
       <Header />
@@ -34,8 +67,17 @@ export default async function CategoryPage({
         <div className="container">
 
           <h1 className="title">
-            {slug.replace(/-/g, " ")}
+            {categoryTitle}
           </h1>
+
+          <p
+            className="subtitle"
+            style={{
+              marginTop: "12px",
+            }}
+          >
+            Explore our collection of {categoryTitle.toLowerCase()} and find the best products from trusted affiliate partners.
+          </p>
 
           <div
             className="grid grid-4"
