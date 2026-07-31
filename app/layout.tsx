@@ -4,42 +4,97 @@ import { CartProvider } from "@/context/CartContext";
 import { WishlistProvider } from "@/context/WishlistContext";
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://lividshop.com"),
+
   title: {
     default: "LividShop",
     template: "%s | LividShop",
   },
+
   description:
-    "Halloween costumes, horror masks, gothic fashion, decorations, and spooky collectibles.",
+    "Discover Halloween costumes, horror masks, gothic fashion, spooky decorations and collectibles from trusted affiliate partners.",
+
+  applicationName: "LividShop",
+
   keywords: [
     "Halloween",
-    "Costumes",
-    "Masks",
-    "Horror",
-    "Gothic",
-    "Decorations",
-    "LividShop",
+    "Halloween Costumes",
+    "Horror Masks",
+    "Gothic Fashion",
+    "Halloween Decorations",
+    "Collectibles",
     "Affiliate Store",
+    "LividShop",
   ],
+
   authors: [
     {
       name: "LividShop",
     },
   ],
+
   creator: "LividShop",
+
   publisher: "LividShop",
-  metadataBase: new URL("https://lividshop.com"),
-  openGraph: {
-    title: "LividShop",
-    description:
-      "Halloween costumes, horror masks, gothic fashion, decorations, and spooky collectibles.",
-    url: "https://lividshop.com",
-    siteName: "LividShop",
-    locale: "en_US",
-    type: "website",
+
+  category: "shopping",
+
+  referrer: "origin-when-cross-origin",
+
+  alternates: {
+    canonical: "https://lividshop.com",
   },
+
   robots: {
     index: true,
     follow: true,
+    googleBot: {
+      index: true,
+      follow: true,
+      "max-image-preview": "large",
+      "max-snippet": -1,
+      "max-video-preview": -1,
+    },
+  },
+
+  openGraph: {
+    title: "LividShop",
+
+    description:
+      "Discover Halloween costumes, horror masks, gothic fashion, spooky decorations and collectibles.",
+
+    url: "https://lividshop.com",
+
+    siteName: "LividShop",
+
+    locale: "en_US",
+
+    type: "website",
+  },
+
+  twitter: {
+    card: "summary_large_image",
+
+    title: "LividShop",
+
+    description:
+      "Discover Halloween costumes, horror masks, gothic fashion, spooky decorations and collectibles.",
+  },
+
+  icons: {
+    icon: "/favicon.ico",
+    shortcut: "/favicon.ico",
+    apple: "/apple-touch-icon.png",
+  },
+
+  manifest: "/site.webmanifest",
+
+  themeColor: "#ff6a00",
+
+  appleWebApp: {
+    capable: true,
+    title: "LividShop",
+    statusBarStyle: "black-translucent",
   },
 };
 
