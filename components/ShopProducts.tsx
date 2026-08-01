@@ -13,10 +13,14 @@ export default function ShopProducts() {
   const [sort, setSort] = useState("default");
   const [page, setPage] = useState(1);
 
-  const categories = [
-    "All",
-    ...new Set(products.map((p) => p.category)),
-  ];
+  const categories = useMemo(() => {
+    return [
+      "All",
+      ...Array.from(
+        new Set(products.map((product) => product.category))
+      ),
+    ];
+  }, []);
 
   const filteredProducts = useMemo(() => {
     let result = [...products];
@@ -28,10 +32,13 @@ export default function ShopProducts() {
     }
 
     if (search.trim()) {
-      result = result.filter((item) =>
-        item.name
-          .toLowerCase()
-          .includes(search.toLowerCase())
+      const searchTerm = search.toLowerCase().trim();
+
+      result = result.filter(
+        (item) =>
+          item.name.toLowerCase().includes(searchTerm) ||
+          item.category.toLowerCase().includes(searchTerm) ||
+          item.description.toLowerCase().includes(searchTerm)
       );
     }
 
@@ -48,6 +55,9 @@ export default function ShopProducts() {
         result.sort((a, b) =>
           a.name.localeCompare(b.name)
         );
+        break;
+
+      default:
         break;
     }
 
@@ -79,23 +89,21 @@ export default function ShopProducts() {
       >
         <input
           className="input"
+          type="search"
           placeholder="Search products..."
           value={search}
           onChange={(e) => setSearch(e.target.value)}
+          aria-label="Search products"
         />
 
         <select
           className="input"
           value={category}
-          onChange={(e) =>
-            setCategory(e.target.value)
-          }
+          onChange={(e) => setCategory(e.target.value)}
+          aria-label="Filter products by category"
         >
           {categories.map((item) => (
-            <option
-              key={item}
-              value={item}
-            >
+            <option key={item} value={item}>
               {item}
             </option>
           ))}
@@ -104,9 +112,8 @@ export default function ShopProducts() {
         <select
           className="input"
           value={sort}
-          onChange={(e) =>
-            setSort(e.target.value)
-          }
+          onChange={(e) => setSort(e.target.value)}
+          aria-label="Sort products"
         >
           <option value="default">
             Sort
@@ -135,29 +142,55 @@ export default function ShopProducts() {
         {filteredProducts.length} Products
       </p>
 
-      <div
-        className="grid grid-4"
-        style={{
-          marginTop: "32px",
-        }}
-      >
-        {currentProducts.map((product) => (
-          <ProductCard
-            key={product.id}
-            id={product.id}
-            slug={product.slug}
-            name={product.name}
-            price={`$${product.price.toFixed(2)}`}
-            image={product.image}
-          />
-        ))}
-      </div>
+      {currentProducts.length === 0 ? (
+        <div
+          className="card"
+          style={{
+            marginTop: "32px",
+            padding: "50px 20px",
+            textAlign: "center",
+          }}
+        >
+          <h2>
+            No products found
+          </h2>
 
-      <Pagination
-        currentPage={page}
-        totalPages={totalPages}
-        onPageChange={setPage}
-      />
+          <p
+            className="subtitle"
+            style={{
+              marginTop: "10px",
+            }}
+          >
+            Try another search term or category.
+          </p>
+        </div>
+      ) : (
+        <div
+          className="grid grid-4"
+          style={{
+            marginTop: "32px",
+          }}
+        >
+          {currentProducts.map((product) => (
+            <ProductCard
+              key={product.id}
+              id={product.id}
+              slug={product.slug}
+              name={product.name}
+              price={`$${product.price.toFixed(2)}`}
+              image={product.images[0]}
+            />
+          ))}
+        </div>
+      )}
+
+      {totalPages > 1 && (
+        <Pagination
+          currentPage={page}
+          totalPages={totalPages}
+          onPageChange={setPage}
+        />
+      )}
     </>
   );
 }
