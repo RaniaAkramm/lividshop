@@ -2,10 +2,20 @@ import Link from "next/link";
 
 export default function Hero() {
   return (
-    <section className="relative overflow-hidden border-b border-zinc-800 bg-gradient-to-b from-zinc-950 to-black">
-      <div className="container mx-auto flex min-h-[650px] max-w-7xl flex-col items-center justify-center px-6 text-center">
+    <section className="relative overflow-hidden border-b border-zinc-800 bg-black">
 
-        <span className="mb-6 rounded-full border border-orange-500/30 bg-orange-500/10 px-4 py-2 text-sm font-semibold text-orange-400">
+      <div
+        className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: "url('/images/hero.jpg')",
+        }}
+      />
+
+      <div className="absolute inset-0 bg-black/70" />
+
+      <div className="relative container mx-auto flex min-h-[650px] max-w-7xl flex-col items-center justify-center px-6 text-center">
+
+        <span className="mb-6 rounded-full border border-orange-500/40 bg-black/60 px-4 py-2 text-sm font-semibold text-orange-400 backdrop-blur-sm">
           Halloween 2026 Collection
         </span>
 
@@ -14,7 +24,7 @@ export default function Hero() {
           <span className="text-orange-500"> Here</span>
         </h1>
 
-        <p className="mt-8 max-w-2xl text-lg leading-8 text-zinc-400">
+        <p className="mt-8 max-w-2xl text-lg leading-8 text-zinc-300 md:text-xl">
           Discover Halloween costumes, horror masks,
           gothic fashion, spooky decorations,
           collectibles, and seasonal deals.
@@ -31,7 +41,7 @@ export default function Hero() {
 
           <Link
             href="/categories"
-            className="rounded-xl border border-zinc-700 px-8 py-4 font-bold text-white transition hover:border-orange-500"
+            className="rounded-xl border border-white/30 bg-black/40 px-8 py-4 font-bold text-white backdrop-blur-sm transition hover:border-orange-500"
           >
             Explore Categories
           </Link>
@@ -39,6 +49,7 @@ export default function Hero() {
         </div>
 
       </div>
+
     </section>
   );
 }
